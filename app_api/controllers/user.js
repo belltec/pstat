@@ -18,11 +18,16 @@ module.exports.addUser = function (req, res) {
   console.log(req.body);
 
   //Checking for user repetition, plane name repetition.
-  User.find({}, function (err, docs) {
-
+  User.find({user: req.body.user}, function (err, docs) {
+    docs.forEach( function (k,v) {
+      if (k) {
+        sendJsonResponse(res, 400, "Username already taken, try again!");
+        return;
+      }
+      console.log("This is k: " + k);
+      console.log("This is v: " + v);
+    });
   });
-
-
 
   var user = new User;
   user.user = req.body.user;
@@ -110,9 +115,10 @@ module.exports.verifyUser = function (req, res) {
           sendJsonResponse(res, 200, true);
           return true;
         }
+        sendJsonResponse(res , 401, false);
         return false;
       });
-    } catch (err) { //if there was a type error token is empty, verify fails
+    } catch (err) { //if there was a type error token is empty, the only error remaining uncaught, verify fails
       return false;
     }
   });
