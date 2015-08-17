@@ -3,6 +3,12 @@ var fs = require('fs');
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var u = require('../../app_client/lib/underscore/underscore.js');
+var User = require('../../app_server/models/user.js');
+
+var sendJsonResponse = function(res, status, content) {
+  res.status(status);
+  res.json(content);
+};
 
 //USER INCLUDE
 
@@ -16,16 +22,16 @@ module.exports.addUser = function (req, res) {
 
   });
 
+
+
   var user = new User;
+  user.user = req.body.user;
+  user.password = req.body.password;
   user.token = jwt.sign({
     user : user.user, 
     password : user.password,
     exp : Date.now() + 2629000000
   }, 'mysecret');
-
-  user.user = req.body.user;
-  user.planes = req.body.planes;
-  user.password = req.body.password;
 
   console.log(user);
   user.save( function (err, data) {
@@ -61,7 +67,7 @@ module.exports.tryLogin = function (req, res) {
       sendJsonResponse(res, 400, err);
     }
     if ( !user ) {
-      response.message = 'User not found!';
+      response.message = 'User or password invalid, try again!';
       sendJsonResponse(res, 404, response);
       return response;
     }
