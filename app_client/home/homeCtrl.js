@@ -8,8 +8,6 @@
     vm.query = {};
     vm.displayKeys = [];
 
-    //NEED ALG THAT DESTROYS THE PLAGUE OF NULLS
-
     //Get meta data on init
     dataService.getMeta() 
     .success( function (data) {

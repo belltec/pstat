@@ -43,7 +43,6 @@
     </div>
     <input type="text" typeahead="zip for zip in vm.meta.Residence_ZipCode5" ng-model="vm.selectZip">
   </div>
-
   <hr>
 
   <div class="row text-center">
@@ -51,12 +50,17 @@
   </div>
 
   <table id="voterTable">
-    <tr>
-      <th class="voterDataTh" ng-repeat="header in vm.displayKeys">{{ header }}</th>
-    </tr>
+    <thead>
+      <tr>
+        <th class="voterDataTh" ng-repeat="header in vm.displayKeys">{{ header }}</th>
+      </tr>
+    </thead>
 
-    <tr ng-repeat="voter in vm.data">
-      <td class="voterDataTd" ng-repeat="data in voter">{{ data }}</td>
-    </tr>
+    <tbody>
+      <tr ng-repeat="voter in vm.data">
+        <td class="voterDataTd" ng-repeat="data in voter">{{ data }}</td>
+      </tr>
+    </tbody>
+
   </table>
 </div>

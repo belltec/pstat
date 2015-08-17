@@ -9,6 +9,9 @@ var jwt = require('jsonwebtoken');
 //Dat app
 var app = express();
 
+//Dat auth
+var auth = require("./app_api/controllers/user.js");
+
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, '/app_server/views'));
@@ -22,12 +25,29 @@ app.use(express.urlencoded());
 app.use(express.methodOverride());
 app.use(express.cookieParser('your secret here'));
 // app.use(express.session());
+
+//Custom middleware!
+
+//Error handler
+app.use(function (err, req, res, next) {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+app.use( '/api' || '/home', function (req, res, next) { //For data requests, and to land on the homepage we need to do user AUTH
+  console.log( "%s %s" , req.method, req.url);
+  //Auth logic here? REF: user.js controller
+  next();
+});
+
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
-app.use(function(req,res){
+app.use(function (req,res){
     res.sendfile(path.join(__dirname, 'app_client', 'index.html'))
 });
+
+
 
 // development only
 if ('development' == app.get('env')) {

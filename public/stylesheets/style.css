@@ -26,11 +26,11 @@ input:hover {
   font-size: 42px;
 }
 .voterDataTh {
-  width: 140px;
+  width: 80px;
   text-align: center;
 }
 .voterDataTd {
-
+  width: 80px;
 }
 .queryLabel {
   font-size: 1.2em;
@@ -43,4 +43,11 @@ input:hover {
 }
 .querySelect {
   width: 30%;
+}
+table, th, td {
+  border: 1px solid black;
+  text-align: center;
+}
+th, td {
+  width: 90px;
 }
