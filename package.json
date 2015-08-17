@@ -1,0 +1,28 @@
+{
+  "name": "pstat",
+  "version": "1.0.0",
+  "description": "pstat is a political statistics server that uses census data along with voter registration data to identify trends and make predictions about political climates.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "\\"
+  },
+  "dependencies": {
+    "angular-local-storage": "^0.1.5",
+    "express": "3.4.x",
+    "express-jwt": "^1.0.0",
+    "fs": "0.0.2",
+    "jade": "*",
+    "jsonwebtoken": "^3.2.2",
+    "mongoose": "3.8.x",
+    "request": "2.36.x",
+    "uglifyjs": "^2.3.6",
+    "node-csvify": "*"
+  },
+  "author": "Bellwether",
+  "license": "ISC"
+}
