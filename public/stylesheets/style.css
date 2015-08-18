@@ -26,11 +26,11 @@ input:hover {
   font-size: 42px;
 }
 .voterDataTh {
-  width: 80px;
+  width: 300px;
   text-align: center;
 }
 .voterDataTd {
-  width: 80px;
+  width: 300px;
 }
 .queryLabel {
   font-size: 1.2em;
@@ -50,4 +50,11 @@ table, th, td {
 }
 th, td {
   width: 90px;
+}
+.infScroll{
+  height: 650px;
+  overflow: auto;
+}
+.infScroll::-webkit-scrollbar {
+    width: 0 !important
 }

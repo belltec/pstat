@@ -4,9 +4,12 @@
 
   dataService.$inject = ['$log', '$http'];
   function dataService ($log, $http) {
-    var jsonData = function (data) {
+    var jsonData = function (data, limit) {
       var dataz = JSON.stringify(data);
-      return $http.get('/api/jsonData', {params: {data: dataz}});
+      return $http.get('/api/jsonData', {params: {
+        data: dataz,
+        limit: limit
+      }});
     };
 
     var getMeta = function (req) {

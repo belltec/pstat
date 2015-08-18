@@ -103,10 +103,13 @@ module.exports.verifyUser = function (req, res) {
       console.log(err);
       return 1;
     }
+    if (!user) {
+      sendJsonResponse(res, 404, "User not found!");
+    }
     console.log(req.body.token);
     //token is req.body.token, VERIFY
     try {
-      jwt.verify(req.body.token, 'mysecret', function(err, decoded) {
+      jwt.verify(req.body.token, 'mysecret', function (err, decoded) {
         if (err) {
           console.log(err);
         }

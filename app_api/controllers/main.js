@@ -129,15 +129,15 @@ function combineData(path1, path2, outPath) { //For combining objects with ident
 //START ROUTED PUBLIC FUCNTIONS ==================================================================================================================>
 //Get voter data
 module.exports.jsonData = function (req, res) {
-
+  
   var q = JSON.parse(req.query.data); //Stringified on the frontend, then parsed on the back
                                       //Because JS is childish and doesn't like $ in prop names
                                       
   delete q[undefined]; //Because javascript is weird sometimes.
-  console.log(q); //Actual query object. FORM: { Prop: {$operator: Value} }
+  console.log(q); //Actual query object. FORM: Query = { Prop: {$operator: Value} }
 
   voter.find(q) 
-  .limit(100)
+  .limit(req.query.limit)
   .exec(function (err, data) {
     console.log("we found voters!"); //Possibly a lie
     if (err) {sendJsonResponse(res, 400, err); return;}

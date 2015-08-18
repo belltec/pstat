@@ -7,6 +7,7 @@
     var vm = this;
     vm.query = {};
     vm.displayKeys = [];
+    vm.limit = 100;
 
     //Get meta data on init
     dataService.getMeta() 
@@ -27,12 +28,17 @@
       vm.query[vr] = new Object();
     };
 
+    vm.loadMore = function () {
+      console.log("We're loading more.");
+      vm.limit += 100;
+    };
+
     vm.giveMeData = function () {
       //Use data service here, route '/jsonData'
       console.log("We are sending $http req to backend.");
 
       console.log(vm.query);
-      dataService.jsonData(vm.query)
+      dataService.jsonData(vm.query, vm.limit)
       .success (function (data) {
         vm.data = data;
         vm.keys = Object.keys(vm.data[0]);

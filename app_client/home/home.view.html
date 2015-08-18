@@ -1,66 +1,79 @@
 <page-header content="vm.header"></page-header>
 <div class="container">
 
-  <div class="row" id="queryRow" ng-init="vm.initiation(Jurisdiction_Ward);">
+  <div class="row"> <!-- Sort: LEFT Field select : RIGHT -->
     <div class="loading text-center" ng-show="!vm.meta"><h1 class="text-success">Loading...</h1></div>
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="wardLabel">Select Ward: </label>
-    </div>
-    <select type="text" ng-options="ward for ward in vm.meta.Jurisdiction_Ward" ng-model='vm.query.Jurisdiction_Ward.$eq' class="querySelect"></select>
-  </div>
+    <div class="col-xs-6">
 
-  <div class="row" id="queryRow" ng-init="vm.initiation(LastVoted);">
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="LastVotedLabel">Last Voted: </label>
-    </div>
-    <select type="text" ng-options="lv for lv in vm.meta.LastVoted" ng-model='vm.query.LastVoted.$eq' class="querySelect"></select>
-  </div>
+      <div class="row" id="queryRow" ng-init="vm.initiation(Jurisdiction_Ward);">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="wardLabel">Select Ward: </label>
+        </div>
+        <select type="text" ng-options="ward for ward in vm.meta.Jurisdiction_Ward" ng-model='vm.query.Jurisdiction_Ward.$eq' class="querySelect"></select>
+      </div>
 
-  <div class="row" id="queryRow" ng-init="vm.initiation(Registration_VoterStatus);">
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Status: </label>
-    </div>
-    <select type="text" ng-options="lv for lv in vm.meta.Registration_VoterStatus" ng-model='vm.query.Registration_VoterStatus.$eq' class="querySelect"></select>
-  </div>
+      <div class="row" id="queryRow" ng-init="vm.initiation(LastVoted);">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="LastVotedLabel">Last Voted: </label>
+        </div>
+        <select type="text" ng-options="lv for lv in vm.meta.LastVoted" ng-model='vm.query.LastVoted.$eq' class="querySelect"></select>
+      </div>
 
-  <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Race);">
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Race: </label>
-    </div>
-    <select type="text" ng-options="lv for lv in vm.meta.Personal_Race" ng-model='vm.query.Personal_Race.$eq' class="querySelect"></select>
-  </div>
+      <div class="row" id="queryRow" ng-init="vm.initiation(Registration_VoterStatus);">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Status: </label>
+        </div>
+        <select type="text" ng-options="lv for lv in vm.meta.Registration_VoterStatus" ng-model='vm.query.Registration_VoterStatus.$eq' class="querySelect"></select>
+      </div>
 
-  <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Sex);">
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Sex: </label>
-    </div>
-    <select type="text" ng-options="lv for lv in vm.meta.Personal_Sex" ng-model='vm.query.Personal_Sex.$eq' class="querySelect"></select>
-  </div>
+      <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Race);">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Race: </label>
+        </div>
+        <select type="text" ng-options="lv for lv in vm.meta.Personal_Race" ng-model='vm.query.Personal_Race.$eq' class="querySelect"></select>
+      </div>
 
-  <div class="row" id="queryRow">
-    <div class="col-xs-6 col-m-3">
-      <label class="queryLabel pull-right" id="districtLabel">Enter Zip:</label>
+      <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Sex);">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Sex: </label>
+        </div>
+        <select type="text" ng-options="lv for lv in vm.meta.Personal_Sex" ng-model='vm.query.Personal_Sex.$eq' class="querySelect"></select>
+      </div>
+
+      <div class="row" id="queryRow">
+        <div class="col-xs-6 col-m-3">
+          <label class="queryLabel pull-right" id="districtLabel">Enter Zip:</label>
+        </div>
+        <input type="text" typeahead="zip for zip in vm.meta.Residence_ZipCode4" ng-model="vm.selectZip">
+      </div>
     </div>
-    <input type="text" typeahead="zip for zip in vm.meta.Residence_ZipCode5" ng-model="vm.selectZip">
+
+    <div class="col-xs-6">
+      <div class="headerRepeater">
+        <input type="checkbox">
+        <label type="fieldLabel"></label>
+      </div>
+    </div>
   </div>
   <hr>
 
   <div class="row text-center">
     <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Gogo gadget query!</button>
   </div>
+  <div class="tableContainer">
+    <table id="voterTable" class="infScroll" inf-scroll="vm.loadMore()">
+      <thead>
+        <tr>
+          <th class="voterDataTh" ng-repeat="(header, key) in vm.meta" ng-style="{'width':'140px;'}">{{ header }}</th>
+        </tr>
+      </thead>
 
-  <table id="voterTable">
-    <thead>
-      <tr>
-        <th class="voterDataTh" ng-repeat="header in vm.displayKeys">{{ header }}</th>
-      </tr>
-    </thead>
+      <tbody>
+        <tr ng-repeat="voter in vm.data">
+          <td class="voterDataTd" ng-repeat="data in voter" ng-style="{'width':'140px;'}">{{ data }}</td>
+        </tr>
+      </tbody>
 
-    <tbody>
-      <tr ng-repeat="voter in vm.data">
-        <td class="voterDataTd" ng-repeat="data in voter">{{ data }}</td>
-      </tr>
-    </tbody>
-
-  </table>
+    </table>
+  </div>
 </div>
