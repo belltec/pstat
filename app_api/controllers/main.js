@@ -6,6 +6,7 @@ var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
 var voter = require('../../app_server/models/voter.js');
 var u = require('../../app_client/lib/underscore/underscore.js');
+var usr = require('../../app_api/controllers/user.js');
 /*DONT FORGET UNDERSCORE IS u*/
 
 //Non API internal functions (private)
@@ -126,7 +127,7 @@ function combineData(path1, path2, outPath) { //For combining objects with ident
   });
 };
 
-//START ROUTED PUBLIC FUCNTIONS ==================================================================================================================>
+//START ROUTED PUBLIC FUCNTIONS (routes caught in app_api/routes/index.js) ==================================================================================================================>
 //Get voter data
 module.exports.jsonData = function (req, res) {
   
@@ -134,6 +135,15 @@ module.exports.jsonData = function (req, res) {
                                       //Because JS is childish and doesn't like $ in prop names
                                       
   delete q[undefined]; //Because javascript is weird sometimes.
+
+  //cycle through and convert regex strings to regex.... shouldn't be necessary
+  var findRegex = Object.keys(q);
+  for (i in Object.keys(q)) {
+    if( q[findRegex[i]].hasOwnProperty("$regex")) {
+      q[findRegex[i]]["$regex"] = RegExp (q[findRegex[i]]["$regex"], "i");
+    }
+  }
+
   console.log(q); //Actual query object. FORM: Query = { Prop: {$operator: Value} }
 
   voter.find(q) 

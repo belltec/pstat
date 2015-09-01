@@ -16,9 +16,19 @@
       return $http.get('/api/getMeta');
     };
 
+    var verifyUser = function (request) {
+      return $http.post('/api/verifyUser', request);
+    };
+
+    var tryLogin = function (request) {
+      return $http.post('/api/tryLogin', request);
+    };
+
     return {
       jsonData    : jsonData,
-      getMeta     : getMeta
-    }
+      getMeta     : getMeta,
+      verifyUser  : verifyUser,
+      tryLogin    : tryLogin
+    };
   };
 })()

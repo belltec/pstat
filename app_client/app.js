@@ -19,7 +19,10 @@ function config ($routeProvider, $locationProvider, localStorageServiceProvider)
     .otherwise({redirectTo: '/'});
 
     //remove gnarly /#/ from html route
-    $locationProvider.html5Mode(true);
+    $locationProvider.html5Mode({
+      enabled: true,
+      requireBase: false
+    });
 
     //Configure local storage
     localStorageServiceProvider

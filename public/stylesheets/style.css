@@ -58,3 +58,4 @@ th, td {
 .infScroll::-webkit-scrollbar {
     width: 0 !important
 }
+.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }

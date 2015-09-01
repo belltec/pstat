@@ -5,6 +5,7 @@ var path = require('path');
 var fs = require('fs');
 var expressJwt = require('express-jwt');
 var jwt = require('jsonwebtoken');
+var usr = require('./app_api/controllers/user.js');
 
 //Dat app
 var app = express();
@@ -34,20 +35,12 @@ app.use(function (err, req, res, next) {
   res.status(500).send('Something broke!');
 });
 
-app.use( '/api' || '/home', function (req, res, next) { //For data requests, and to land on the homepage we need to do user AUTH
-  console.log( "%s %s" , req.method, req.url);
-  //Auth logic here? REF: user.js controller
-  next();
-});
-
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
 app.use(function (req,res){
     res.sendfile(path.join(__dirname, 'app_client', 'index.html'))
 });
-
-
 
 // development only
 if ('development' == app.get('env')) {

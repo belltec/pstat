@@ -7,7 +7,8 @@ module.exports = function (app) {
   app.get('/api/jsonData', ctrl.jsonData);
   app.get('/api/getMeta', ctrl.getMeta);
 
-  app.post('/api/verifyUser', usr.verifyUser);
   app.post('/api/addUser', usr.addUser);
+  app.post('/api/verifyUser', usr.verifyUser);
+  app.post('/api/tryLogin', usr.tryLogin);
 
 };

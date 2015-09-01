@@ -5,6 +5,16 @@
   loginCtrl.$inject = ['$log', '$route', '$location', 'dataService', 'localStorageService'];
   function loginCtrl ($log, $route, $location, dataService, localStorageService) {
     var vm = this;
+    vm.token = localStorageService.get("token");
+    if (vm.token) {
+      dataService.verifyUser(vm.token)
+      .success( function (data) {
+        console.log(data);
+      })
+      .error ( function (err) {
+        console.log(err);
+      });
+    }
 
     vm.pageHeader = {
       title: "Political Statistics Engine",
@@ -13,11 +23,17 @@
 
     vm.login = function () {
       $log.debug("You're trying to log in.");
-      if (vm.username == "awimley" && vm.password == "10281787") {
-        $log.debug("Success");
+      dataService.tryLogin({
+        user: vm.username,
+        password: vm.password
+      })
+      .success( function (data) {
+        localStorageService.set("token", data);
         $location.url('/home');
-        
-      }
+      })
+      .error( function (err) {
+        vm.res = err;
+      });
     };
   }
 })()

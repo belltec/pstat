@@ -66,17 +66,26 @@ module.exports.tryLogin = function (req, res) {
         token : {},
       };
 
-  User.findOne({ user : req.body.user.toLowerCase()}, function (err, user) {
+  User.find({ user : req.body.user.toLowerCase()}, function (err, users) {
+    var user = {}; //To store a single user object, users is a DB cursor.
     if (err) { 
       console.log(err);
       sendJsonResponse(res, 400, err);
     }
-    if ( !user ) {
+    if ( !users[0] ) {
       response.message = 'User or password invalid, try again!';
       sendJsonResponse(res, 404, response);
       return response;
     }
-    if (user.password === req.body.password) {
+
+    users.forEach (function (doc ) {
+      user = doc;
+    });
+
+    console.log(user._doc.password);
+    console.log(req.body.password);
+
+    if (user._doc.password == req.body.password) {
       //Success! (we found a user and the passwords match.)
       response.token = jwt.sign({
         user : user.user, 
@@ -85,7 +94,6 @@ module.exports.tryLogin = function (req, res) {
         }, 'mysecret');
       response.user = user.user;
       sendJsonResponse(res, 201, response);
-
       return response;
     }
     response.message = 'User or password invalid, try again!';
@@ -96,9 +104,15 @@ module.exports.tryLogin = function (req, res) {
 
 module.exports.verifyUser = function (req, res) {
   console.log(req.body);
+  if (!req.body.user) {
+    sendJsonResponse( res, 400, "User not provided, please log in.");
+    return;
+  }
+
   User.findOne({ user : req.body.user.toLowerCase()}, function (err, user) {
     var response = false;
     //Returns true or false
+
     if (err) { 
       console.log(err);
       return 1;
@@ -113,15 +127,16 @@ module.exports.verifyUser = function (req, res) {
         if (err) {
           console.log(err);
         }
-        if (decoded.user === user.user && decoded.password === user.password ) {
+        if (decoded.user === user.user && req.body.token === user.token ) {
           console.log('success!');
           sendJsonResponse(res, 200, true);
           return true;
         }
-        sendJsonResponse(res , 401, false);
+        sendJsonResponse(res , 401, {message: "Invalid credentials. Please try again..."});
         return false;
       });
     } catch (err) { //if there was a type error token is empty, the only error remaining uncaught, verify fails
+      sendJsonResponse( res, 400, false);
       return false;
     }
   });

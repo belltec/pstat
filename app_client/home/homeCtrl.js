@@ -8,6 +8,11 @@
     vm.query = {};
     vm.displayKeys = [];
     vm.limit = 100;
+    vm.search = "";
+
+    var up = function (item) {
+      return item.toUpperCase();
+    };
 
     //Get meta data on init
     dataService.getMeta() 
@@ -17,7 +22,7 @@
     })
     .error ( function (err ){
       vm.error = err;
-    })
+    });
 
     vm.header = {
       title: "Political Statistics Engine v0.1",
@@ -28,6 +33,10 @@
       vm.query[vr] = new Object();
     };
 
+    vm.insensitive = function (actual, expected) { //If any case of one is equal to the other...
+      return (actual == expected || actual.toUpperCase() == expected || actual.toLowerCase() == expected || actual == expected.toUpperCase() || actual == expected.toLowerCase());
+    };
+
     vm.loadMore = function () {
       console.log("We're loading more.");
       vm.limit += 100;
@@ -35,13 +44,23 @@
 
     vm.giveMeData = function () {
       //Use data service here, route '/jsonData'
+      /*if (vm.query.Personal_FirstName) {
+        vm.query.Personal_FirstName.$regex = vm.query.Personal_FirstName.$regex;// turn EQUALS to CONTAINS via regex literal
+      }*/
+
+      if (vm.query.Personal_LastName) {
+        vm.query.Personal_LastName.$eq = up(vm.query.Personal_LastName.$eq);
+      }
+      
       console.log("We are sending $http req to backend.");
 
       console.log(vm.query);
       dataService.jsonData(vm.query, vm.limit)
       .success (function (data) {
         vm.data = data;
-        vm.keys = Object.keys(vm.data[0]);
+        if (vm.data) {
+          vm.keys = Object.keys(vm.data[0]);
+        }
 
         //Making headers more display friendly
         angular.forEach(vm.keys, function (v, k) {
@@ -65,7 +84,7 @@
       .error( function (err) {
         console.log(err);
       })
-    }
+    };
   }
 
 })()
