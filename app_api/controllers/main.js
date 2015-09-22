@@ -134,13 +134,13 @@ module.exports.jsonData = function (req, res) {
   var q = JSON.parse(req.query.data); //Stringified on the frontend, then parsed on the back
                                       //Because JS is childish and doesn't like $ in prop names
                                       
-  delete q[undefined]; //Because javascript is weird sometimes.
+  delete q[undefined]; //Because javascript
 
-  //cycle through and convert regex strings to regex.... shouldn't be necessary
-  var findRegex = Object.keys(q);
+  //Converting $regex property to literals from a regex string
+  var findRegex = Object.keys(q); //Keys through which to search for $regex prop
   for (i in Object.keys(q)) {
     if( q[findRegex[i]].hasOwnProperty("$regex")) {
-      q[findRegex[i]]["$regex"] = RegExp (q[findRegex[i]]["$regex"], "i");
+      q[findRegex[i]]["$regex"] = RegExp (q[findRegex[i]]["$regex"], "i"); //Case insensitive 'contains' regex
     }
   }
 

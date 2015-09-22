@@ -1,5 +1,8 @@
 table {
-  background-color: #eeeeee;
+  background-color: #dddddd;
+}
+.container::-webkit-scrollbar {
+  width: 0px !important;
 }
 .hovShadow {
   -webkit-transition: -webkit-box-shadow 0.1s ease-out, -moz-box-shadow 0.1s ease-out, box-shadow 0.1s ease-out;
@@ -44,18 +47,54 @@ input:hover {
 .querySelect {
   width: 30%;
 }
+thead {
+  top: 350px;
+  left: 390px;
+  position: fixed;
+}
 table, th, td {
   border: 1px solid black;
   text-align: center;
 }
-th, td {
-  width: 90px;
+th {
+  width: 135px !important;
+  background-color: #eeeeee;
+}
+td {
+  width: 135px !important;
+}
+body {
+  overflow: none;
 }
 .infScroll{
-  height: 650px;
-  overflow: auto;
+  height: 550px;
+  overflow-y: scroll;
 }
 .infScroll::-webkit-scrollbar {
     width: 0 !important
 }
+.landingOverlay {
+  float: top;
+}
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+
+/* small desktop */
+@media all and (max-width: 1200px) {
+    .infScroll {
+      width: 1024px;
+    }
+}
+
+/* tablet */
+@media all and (max-width: 1024px) {
+    .infScroll {
+      width: 768px;
+    }
+}
+
+/* mobile phone */
+@media all and (max-width: 768px) {
+    .infScroll {
+      width: 650px;
+    }
+}

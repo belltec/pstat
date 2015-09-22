@@ -9,9 +9,16 @@
     vm.displayKeys = [];
     vm.limit = 100;
     vm.search = "";
-
-    var up = function (item) {
-      return item.toUpperCase();
+    vm.loading = false;
+    vm.fields = {
+      "LastVoted" : "Last Voted",
+      "Mail_Address1" : "Address",
+      "Mail_ZipCode5": "Zip Code",
+      "Mail_City" : "City",
+      "Personal_Age" : "Age",
+      "Personal_FirstName": "First Name",
+      "Personal_LastName": "Last Name",
+      "Registration_PoliticalPartyCode": "Party"
     };
 
     //Get meta data on init
@@ -33,45 +40,52 @@
       vm.query[vr] = new Object();
     };
 
-    vm.insensitive = function (actual, expected) { //If any case of one is equal to the other...
-      return (actual == expected || actual.toUpperCase() == expected || actual.toLowerCase() == expected || actual == expected.toUpperCase() || actual == expected.toLowerCase());
-    };
-
     vm.loadMore = function () {
       console.log("We're loading more.");
       vm.limit += 100;
+
+      //Precall loading vm object
+      vm.loading = true;
+      dataService.jsonData(vm.query, vm.limit)
+      .success (function (data) {
+        vm.loading = false;
+        vm.data = data;
+        if (vm.data[0]) {
+          vm.keys = Object.keys(vm.data[0]);
+        } else {
+          vm.error = "Your search returned 0 results.";
+        }
+      })
+      .error (function (err) {
+        vm.loading = false;
+        $log.debug(err);
+        vm.error = err;
+      });
+
     };
 
     vm.giveMeData = function () {
-      //Use data service here, route '/jsonData'
-      /*if (vm.query.Personal_FirstName) {
-        vm.query.Personal_FirstName.$regex = vm.query.Personal_FirstName.$regex;// turn EQUALS to CONTAINS via regex literal
-      }*/
-
-      if (vm.query.Personal_LastName) {
-        vm.query.Personal_LastName.$eq = up(vm.query.Personal_LastName.$eq);
-      }
-      
+      //Use data service here, route '/jsonData', query: MongoDB default.
+      vm.error = ""; //Lets prepare for catching errors.      
       console.log("We are sending $http req to backend.");
 
       console.log(vm.query);
+
+      vm.loading = true;
       dataService.jsonData(vm.query, vm.limit)
       .success (function (data) {
+        vm.loading = false;
         vm.data = data;
-        if (vm.data) {
+        if (vm.data[0]) {
           vm.keys = Object.keys(vm.data[0]);
+        } else {
+          vm.error = "Your search returned 0 results.";
         }
-
-        //Making headers more display friendly
-        angular.forEach(vm.keys, function (v, k) {
-          var newValue = v.replace("_", "\n");
-          vm.displayKeys.push(newValue);
-          $log.debug(v);
-        });
-        $log.debug(vm.displayKeys);
       })
       .error (function (err) {
+        vm.loading = false;
         $log.debug(err);
+        vm.error = err;
       });
     };
 
