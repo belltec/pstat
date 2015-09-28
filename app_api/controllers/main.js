@@ -159,7 +159,7 @@ module.exports.jsonData = function (req, res) {
 //Get voter meta data
 module.exports.getMeta = function (req, res) {
   console.log("Getting meta data...");
-  fs.readFile('/Users/awimley/pstat/data/metaComb.json', 'utf-8', function (err, data) {
+  fs.readFile('data/metaComb.json', 'utf-8', function (err, data) {
     if (err) {console.log(err); return;}
     sendJsonResponse(res, 200, JSON.parse(data));
   })
