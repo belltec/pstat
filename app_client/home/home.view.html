@@ -1,11 +1,18 @@
 <page-header content="vm.header"></page-header>
 <div class="container">
 
-  <div class="row"> <!-- Sort: LEFT Field select : RIGHT -->
+  <div class="row text-center"> <!-- Sort: LEFT Field select : RIGHT -->
 
-    <div class="loading text-center" ng-show="!vm.meta || vm.error">
+    <div class="text-center" ng-show="!vm.meta || vm.error">
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
+    <button class="btn btn-default" ng-click="vm.addQuery()">Add Query</button>
+
+    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">SOMETHING REPEAT ME</div>
+
+    <!-- QUERY BUILDER FROM ONLINE -->
+
+    <!-- QUERY BUILDER FROM ONLINE END -->
 
     <!--OLD FORM IF THERE IS A GOD OF CS PLEASE LET ANGULAR QUERY BUILDER WORK BY WEDNESDAY -->
     <!-- <form>

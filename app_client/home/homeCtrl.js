@@ -6,6 +6,11 @@
   function homeCtrl ($log, dataService, localStorageService, $http) {
     var vm = this;
     vm.query = {};
+    
+    //Variables for the query builder
+    vm.queries = 1;
+    vm.repQueries = [];
+
     vm.displayData = [];
     vm.displayKeys = [];
     vm.limit = 1500;
@@ -119,6 +124,14 @@
       });
     };
 
+    vm.whyAmINecessary = function (num) {
+      return new Array(num);
+    };
+
+    vm.addQuery = function () {
+      vm.queries += 1;
+    };
+
     vm.giveMeMeta = function () {
       console.log("Time to get META..");
       dataService.getMeta()
@@ -130,5 +143,4 @@
       })
     };
   }
-
 })()
