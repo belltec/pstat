@@ -8,7 +8,7 @@
     </div>
     <button class="btn btn-default" ng-click="vm.addQuery()">Add Query</button>
 
-    <div class="queryRow" ng-repeat="j in vm.repQueries track by $i">SOMETHING REPEAT ME</div>
+    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">SOMETHING REPEAT ME</div>
 
     <!-- QUERY BUILDER FROM ONLINE -->
 

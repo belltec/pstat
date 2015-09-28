@@ -8,7 +8,7 @@
     vm.query = {};
     
     //Variables for the query builder
-    vm.queries = 0;
+    vm.queries = 1;
     vm.repQueries = [];
 
     vm.displayData = [];
@@ -124,10 +124,12 @@
       });
     };
 
+    vm.whyAmINecessary = function (num) {
+      return new Array(num);
+    };
+
     vm.addQuery = function () {
-      console.log("Adding queries");
       vm.queries += 1;
-      vm.repQueries.push(vm.queries);
     };
 
     vm.giveMeMeta = function () {
