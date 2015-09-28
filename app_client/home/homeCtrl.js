@@ -12,6 +12,7 @@
     vm.search = "";
     vm.loading = false;
     vm.page = 1;
+    vm.pages = 0; //Keep track for pagination reasons.
     vm.ngRepStart = 1;
     vm.ngRepEnd = 100;
     vm.fields = { //Converts the keys from data into
@@ -22,6 +23,8 @@
       "Personal_Age" : "Age",
       "Personal_FirstName": "First Name",
       "Personal_LastName": "Last Name",
+      "Jurisdiction_Precinct": "Precinct",
+      "Jurisdiction_Ward": "Ward",
       "Registration_PoliticalPartyCode": "Party"
     };
 
@@ -41,6 +44,7 @@
     };
 
     vm.next = function () {
+      console.log(angular.element(".infScroll").scrollTop(0));
       vm.err = "";
       vm.page += 1;
       var start = vm.page*100 - 99;
@@ -74,29 +78,6 @@
       vm.query[vr] = new Object();
     };
 
-    vm.loadMore = function () {
-      console.log("We're loading more.");
-      vm.limit += 100;
-
-      //Precall loading vm object
-      vm.loading = true;
-      dataService.jsonData(vm.query, vm.limit)
-      .success (function (data) {
-        vm.loading = false;
-        vm.data = data;
-        if (vm.data[0]) {
-          vm.keys = Object.keys(vm.data[0]);
-        } else {
-          vm.error = "Your search returned 0 results.";
-        }
-      })
-      .error (function (err) {
-        vm.loading = false;
-        $log.debug(err);
-        vm.error = err;
-      });
-    };
-
     vm.giveMeData = function () {
       //Use data service here, route '/jsonData', query: MongoDB default.
       vm.error = ""; //Lets prepare for catching errors.   
@@ -112,6 +93,13 @@
       .success (function (data) {
         vm.loading = false;
         vm.data = data;
+
+        vm.count = data.length;
+        vm.pages = vm.count / 100;
+        if (vm.count < 100) {
+          vm.ngRepEnd = vm.count;
+        }
+
         vm.displayData = data.slice(1, 100);
         if (vm.data[0]) {
           vm.keys = Object.keys(vm.data[0]);

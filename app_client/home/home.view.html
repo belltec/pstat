@@ -2,11 +2,13 @@
 <div class="container">
 
   <div class="row"> <!-- Sort: LEFT Field select : RIGHT -->
+
     <div class="loading text-center" ng-show="!vm.meta || vm.error">
-      
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
-    <form>
+
+    <!--OLD FORM IF THERE IS A GOD OF CS PLEASE LET ANGULAR QUERY BUILDER WORK BY WEDNESDAY -->
+    <!-- <form>
       <div class="col-xs-6">
         
         <div class="row" id="queryRow" ng-init="vm.initiation(Jurisdiction_Ward);">
@@ -67,21 +69,24 @@
         </div>
 
         <div class="row text-center">
-          <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Gogo gadget query!</button>
+          <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Excecute Query</button>
         </div>
       </div>
     <hr>
-    </form>
-    <div class="row">
+    </form> -->
+    <div class="text-center">
+      <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Excecute Query</button>
+    </div>
+    
+    <div class="row" ng-show="vm.data">
       <div class="col-md-12">
         <nav><ul class="pager">
           <li><button class="btn btn-primary" ng-click="vm.prev()">Previous</button></li>
-          <li><p class="strong"><strong> Page : {{ vm.page }} </strong> ({{vm.ngRepStart}} - {{vm.ngRepEnd}})</p></li>
+          <li><p class="strong"><strong> Page : {{ vm.page }} of {{vm.pages}} </strong> ({{vm.ngRepStart}} - {{vm.ngRepEnd}} of {{vm.count}})</p></li>
           <li><button class="btn btn-primary" ng-click="vm.next()">Next</button></li>
         </ul></nav>
       </div>
     </div>
-    
 
     <!-- <div class="col-xs-6">
       <div class="headerRepeater">
@@ -91,11 +96,11 @@
   </div>
   <hr>
 
-
   <div class="tableContainer infScroll">
     <!-- Loading overlay -->
 
     <table id="voterTable" class="">
+
       <thead>
         <tr>
           <th class="voterDataTh" ng-repeat="(key, header) in vm.fields">{{ header }}</th>
