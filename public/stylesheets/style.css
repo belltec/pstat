@@ -121,6 +121,10 @@ body {
     margin-left: 20px;
 }
 
+.queryItems {
+  margin-right: 4px;
+}
+
 .alert-group{
     margin-top: 10px;
     margin-bottom: 10px;

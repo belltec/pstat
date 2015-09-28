@@ -32,6 +32,51 @@
       "Jurisdiction_Ward": "Ward",
       "Registration_PoliticalPartyCode": "Party"
     };
+    vm.operators1 = [{
+      id: 1,
+      item: 'AND'
+    }, {
+      id: 2,
+      item: 'OR'
+    }];
+    vm.operators2 = [{
+      id: 1,
+      item: '='
+    }, {
+      id: 2,
+      item: '!='
+    }];
+    vm.headers = [{
+      id: 1,
+      item: 'Precinct'
+    },{
+      id: 2,
+      item: 'Ward'
+    }, {
+      id: 3,
+      item: 'Last Voted'
+    },{
+      id: 4,
+      item: 'Address'
+    },{
+      id: 5,
+      item: 'City'
+    },{
+      id: 6,
+      item: 'Zip Code'
+    },{
+      id: 7,
+      item: 'Age'
+    },{
+      id: 8,
+      item: 'First Name'
+    },{
+      id: 9,
+      item: 'Last Name'
+    }, {
+      id: 10,
+      item: 'Party'
+    }]
 
     //Get meta data on init
     dataService.getMeta() 
