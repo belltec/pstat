@@ -36,6 +36,7 @@ app.use(function (err, req, res, next) {
 });
 
 app.use(app.router);
+app.use(express.static(path.join(__dirname, 'data')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'app_client')));
 app.use(function (req,res){
