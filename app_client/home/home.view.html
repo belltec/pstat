@@ -1,14 +1,44 @@
 <page-header content="vm.header"></page-header>
-<div class="container-fluid">
+<div class="container">
 
   <div class="row text-center"> <!-- Sort: LEFT Field select : RIGHT -->
 
     <div class="text-center" ng-show="!vm.meta || vm.error">
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
-    <button class="btn btn-default" ng-click="vm.addQuery()">Add Query</button>
+    <button style="margin-bottom:5px;" class="btn btn-default" ng-click="vm.addQuery()">Add Query</button>
 
-    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">SOMETHING REPEAT ME</div>
+    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index"><ul class="queryRowUl">
+      <li class="queryItems">
+        <select ng-options="i as j.item for j in vm.headers" ng-model="selectedH">
+          <pre>{{selectedH}}</pre>
+        </select>
+      </li>
+      <li class="queryItems">
+        <select ng-options="i as i.item for i in vm.operators2" ng-model="selectedOperator2">
+          <pre>{{selectedOperator2}}</pre>
+        </select>
+      </li>
+      <li class="queryItems">
+        <input placeholder="Test">
+          
+        </input>
+      </li>
+      <li class="queryItems">
+        <select ng-options="i as i.item for i in vm.operators1" ng-model="selectedOperator1">
+          <pre>{{selectedOperator1}}</pre>
+        </select>
+      </li>
+      <li class="queryItems">
+        <button style="padding:0px 6px;" class="btn btn-warning">
+          <span style="font-size:10px;" class="glyphicon glyphicon-remove">
+          </span>
+        </button>
+      </li>
+      <li>
+      </li>
+    </ul>
+  </div>
 
     <!-- QUERY BUILDER FROM ONLINE -->
 
