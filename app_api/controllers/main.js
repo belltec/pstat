@@ -25,7 +25,7 @@ function tsvJson (tsv){
   var noFSreg = new RegExp(/\/\/+/g);
   var noFS = linesWithoutReturn.replace(noFSreg, "");
 
-  //Elimiate single backslash
+  //Elimiate single forwardslash
   var noBSreg = new RegExp(/\\+/g);
   var noBS = noFS.replace(noBSreg, "");
   var lines=noBS.split("\n");
@@ -50,7 +50,7 @@ function tsvJson (tsv){
 }
 
 //Custom non-invasive duplicate removal
-//WARNING: scales as O(n^2). DO NOT use on original data, only meta data
+//WARNING: Algorithm scales as O(n^2). DO NOT use on original data, only meta data
 function arrayUnique(array) {
   var a = array.concat();
   for(var i=0; i<a.length; ++i) {

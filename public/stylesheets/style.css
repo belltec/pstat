@@ -48,9 +48,18 @@ input:hover {
   width: 30%;
 }
 thead {
-  top: 350px;
+  top: 430px;
   left: 390px;
-  position: fixed;
+  position: absolute;
+}
+.loading {
+  opacity: 0.5;
+}
+p {
+  display: inline-block;
+}
+li {
+  display: inline-block;
 }
 table, th, td {
   border: 1px solid black;
@@ -64,14 +73,16 @@ td {
   width: 135px !important;
 }
 body {
-  overflow: none;
+  overflow: hidden;
+  padding: 0px;
+  margin: 0px;
 }
 .infScroll{
-  height: 550px;
+  height: 500px;
   overflow-y: scroll;
 }
 .infScroll::-webkit-scrollbar {
-    width: 0 !important
+    width: 0 !important;
 }
 .landingOverlay {
   float: top;

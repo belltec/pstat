@@ -6,11 +6,15 @@
   function homeCtrl ($log, dataService, localStorageService, $http) {
     var vm = this;
     vm.query = {};
+    vm.displayData = [];
     vm.displayKeys = [];
-    vm.limit = 100;
+    vm.limit = 1500;
     vm.search = "";
     vm.loading = false;
-    vm.fields = {
+    vm.page = 1;
+    vm.ngRepStart = 1;
+    vm.ngRepEnd = 100;
+    vm.fields = { //Converts the keys from data into
       "LastVoted" : "Last Voted",
       "Mail_Address1" : "Address",
       "Mail_ZipCode5": "Zip Code",
@@ -32,8 +36,38 @@
     });
 
     vm.header = {
-      title: "Political Statistics Engine v0.1",
+      title: "Political Statistics Engine v0.2",
       strapline: "Lousiana Voters"
+    };
+
+    vm.next = function () {
+      vm.err = "";
+      vm.page += 1;
+      var start = vm.page*100 - 99;
+      var end = vm.page*100;
+      var data = vm.data;
+      vm.displayData = data.slice(start, end);
+
+      //Display purposes
+      vm.ngRepStart = start;
+      vm.ngRepEnd = end;
+    };
+
+    vm.prev = function () {
+      vm.err = "";
+      if (vm.page == 1) {
+        vm.err = "You are on page 1.";
+      } else {
+        vm.page -= 1;
+        var start = vm.page*100 - 99;
+        var end = vm.page*100;
+        var data = vm.data;
+        vm.displayData = data.slice(start, end);
+
+        //Display purposes
+        vm.ngRepStart = start;
+        vm.ngRepEnd = end;
+      }
     };
 
     vm.initiation = function (vr) {
@@ -61,12 +95,14 @@
         $log.debug(err);
         vm.error = err;
       });
-
     };
 
     vm.giveMeData = function () {
       //Use data service here, route '/jsonData', query: MongoDB default.
-      vm.error = ""; //Lets prepare for catching errors.      
+      vm.error = ""; //Lets prepare for catching errors.   
+
+      vm.page = 1; //Reinitialize data viewer
+
       console.log("We are sending $http req to backend.");
 
       console.log(vm.query);
@@ -76,11 +112,17 @@
       .success (function (data) {
         vm.loading = false;
         vm.data = data;
+        vm.displayData = data.slice(1, 100);
         if (vm.data[0]) {
           vm.keys = Object.keys(vm.data[0]);
         } else {
           vm.error = "Your search returned 0 results.";
         }
+        //After the first loading loop, load WAY more results. user shouldn't notice since page 1 is up. Call for 1000 takes ~2.5 seconds with no query.
+        //Search time goes up exponentially with new queries, and logarithmic with the number of searched records. MAX FOR 1000: probably ~10s
+        //THIS SHOULD BE TRANSPARENT TO USER.
+        //BENCHMARKING REQUIRED
+
       })
       .error (function (err) {
         vm.loading = false;
