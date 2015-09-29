@@ -1,18 +1,20 @@
 <page-header content="vm.header"></page-header>
-<div class="container-fluid">
+<div class="">
 
   <div class="row text-center"> <!-- Sort: LEFT Field select : RIGHT -->
 
     <div class="text-center" ng-show="!vm.meta || vm.error">
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
+
     <button class="btn btn-default" ng-click="vm.addQuery()">Add Query Parameter</button>
     <button class="btn btn-default" ng-click="vm.giveMeData()">Excecute Query</button>
 
-    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">
-        <select class="selectParam" ng-options="" ng-model="vm.test"></select>
-        <select class="selectOperator" ng-options="k as v for (k, v) in vm.operators" ng-model="vm.test"></select>
-        <input>
+    <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">
+        <select class="selectParam queryRowStuff" ng-options="k as k for (k, v) in vm.meta" ng-model="vm.qArray[$index]['param']"></select>
+        <select class="selectOperator queryRowStuff" ng-options="v.op as v.name for (k, v) in vm.operators" ng-model="vm.qArray[$index]['op']"></select>
+        <input class="queryRowStuff" ng-model="vm.qArray[$index]['value']">
+        <button class="btn btn-warning queryRowStuff" ng-click="vm.removeMe($index)"><span class="glyphicon glyphicon-remove-sign"></span></button>
     </div>
 
     <!-- QUERY BUILDER FROM ONLINE -->
@@ -100,11 +102,6 @@
       </div>
     </div>
 
-    <!-- <div class="col-xs-6">
-      <div class="headerRepeater">
-        <label type="fieldLabel"></label>
-      </div>
-    </div> -->
   </div>
   <hr>
 

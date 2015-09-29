@@ -88,7 +88,10 @@ body {
   float: top;
 }
 .queryRow {
-  padding: 6px;
+  padding: 4px;
+}
+.queryRowStuff {
+  height: 30px;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
@@ -111,4 +114,32 @@ body {
     .infScroll {
       width: 650px;
     }
+}
+
+.group{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    border: solid 1px #666;
+}
+
+.group-conditions{
+    margin-left: 20px;
+}
+
+.queryItems {
+  margin-right: 4px;
+}
+
+.alert-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-color: rgb(192, 152, 83);
+    border-color: rgb(251, 238, 213);
+    border-color: rgb(220, 200, 150);
+}
+
+.condition, .group{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }

@@ -9,7 +9,7 @@
     
     //Variables for the query builder
     vm.queries = 0;
-    vm.repQueries = [];
+    vm.qArray = [];
 
     //Other variables
     vm.displayData = [];
@@ -38,20 +38,20 @@
       name : "=",
       op   : "$eq"
     }, {
-      name : "Greater Than",
+      name : ">",
       op   : "$gt"
     }, {
-      name : "Less Than",
+      name : "<",
       op   : "$lt"
     }, {
-      name : "Greater Than Or Equal To",
+      name : ">=",
       op   : "$gte"
     }, {
-      name : "Less Than Or Equal To",
+      name : "<=",
       op   : "$lte"
     }, {
-      name : "Regex",
-      op   : "$reg"
+      name : "contains",
+      op   : "$regex"
     }];
 
     //Get meta data on init
@@ -100,8 +100,14 @@
       }
     };
 
+    vm.removeMe = function (i) {
+      vm.qArray.splice(i, 1);
+      vm.queries -= 1;
+    };
+
     vm.initiation = function (vr) {
-      vm.query[vr] = new Object();
+      vm.qArray[vr] = new Object();
+      vm.queries += vm.queries;
     };
 
     vm.giveMeData = function () {
@@ -110,7 +116,14 @@
 
       vm.page = 1; //Reinitialize data viewer
 
-      console.log("We are sending $http req to backend.");
+      console.log(vm.qArray); //Query builder array 
+      angular.forEach(vm.qArray, function (v, k) { //V is query object
+        console.log(v);
+          if (v.op && v.param && v.value) {
+            vm.query[v.param] = new Object();
+            vm.query[v.param][v.op] = v.value; 
+          }
+      });
 
       console.log(vm.query);
 
@@ -121,7 +134,7 @@
         vm.data = data;
 
         vm.count = data.length;
-        vm.pages = vm.count / 100;
+        vm.pages = Math.ceil( vm.count / 100 );
         if (vm.count < 100) {
           vm.ngRepEnd = vm.count;
         }
@@ -145,11 +158,8 @@
       });
     };
 
-    vm.whyAmINecessary = function (num) {
-      return new Array(num);
-    };
-
     vm.addQuery = function () {
+      vm.qArray[vm.queries] = new Object();
       vm.queries += 1;
     };
 
