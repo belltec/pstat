@@ -48,11 +48,10 @@ input:hover {
   width: 30%;
 }
 thead {
-  top: 458px;
-  left: 285px;
+  top: 457px;
+  left: 217px;
   position: absolute;
 }
-
 .loading {
   opacity: 0.5;
 }

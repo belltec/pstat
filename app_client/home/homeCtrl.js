@@ -31,7 +31,8 @@
       "Personal_LastName": "Last Name",
       "Jurisdiction_Precinct": "Precinct",
       "Jurisdiction_Ward": "Ward",
-      "Registration_PoliticalPartyCode": "Party"
+      "Registration_PoliticalPartyCode": "Party",
+      "Count": "Count"
     };
 
     vm.operators = [{
@@ -90,7 +91,7 @@
       } else {
         vm.page -= 1;
         var start = vm.page*100 - 99;
-        var end = vm.page*100;
+        var end = vm.page*100 - 1;
         var data = vm.data;
         vm.displayData = data.slice(start, end);
 
@@ -116,6 +117,10 @@
 
       vm.page = 1; //Reinitialize pagination on data refresh
       vm.pages = 0;
+
+      vm.query = new Object();
+
+      var num = 0; //Local to add a running count column
 
       console.log(vm.qArray); //Query builder array 
       angular.forEach(vm.qArray, function (v, k) { //V is query object
@@ -146,11 +151,11 @@
         } else {
           vm.error = "Your search returned 0 results.";
         }
-        //After the first loading loop, load WAY more results. user shouldn't notice since page 1 is up. Call for 1000 takes ~2.5 seconds with no query.
-        //Search time goes up exponentially with new queries, and logarithmic with the number of searched records. MAX FOR 1000: probably ~10s
-        //THIS SHOULD BE TRANSPARENT TO USER.
-        //BENCHMARKING REQUIRED
 
+        angular.forEach(data, function (k, v) {
+          data[v]["Count"] = "#" + num;
+          num += 1;
+        });
       })
       .error (function (err) {
         vm.loading = false;
