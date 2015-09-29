@@ -7,14 +7,18 @@
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
 
+    <h1 class="text-success" ng-show="!vm.meta">Loading Meta Data...</h1>
+
     <button class="btn btn-default" ng-click="vm.addQuery()">Add Query Parameter</button>
     <button class="btn btn-default" ng-click="vm.giveMeData()">Excecute Query</button>
 
-    <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">
+    <div class="queryContainer">
+      <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">
         <select class="selectParam queryRowStuff" ng-options="k as k for (k, v) in vm.meta" ng-model="vm.qArray[$index]['param']"></select>
         <select class="selectOperator queryRowStuff" ng-options="v.op as v.name for (k, v) in vm.operators" ng-model="vm.qArray[$index]['op']"></select>
         <input class="queryRowStuff" ng-model="vm.qArray[$index]['value']">
         <button class="btn btn-warning queryRowStuff" ng-click="vm.removeMe($index)"><span class="glyphicon glyphicon-remove-sign"></span></button>
+      </div>
     </div>
 
     <!-- QUERY BUILDER FROM ONLINE -->
@@ -102,13 +106,12 @@
       </div>
     </div>
 
-  </div>
   <hr>
 
-  <div class="tableContainer infScroll">
+  <div class="tableContainer infScroll text-center">
     <!-- Loading overlay -->
 
-    <table id="voterTable" class="">
+    <table id="voterTable" class="" align="center">
 
       <thead>
         <tr>
@@ -117,7 +120,7 @@
       </thead>
 
       <tbody>
-        <h1 class="text-success" ng-show="!vm.meta">Loading...</h1>
+        
         <tr ng-repeat="voter in vm.displayData">
           <td class="" ng-repeat="(key, head) in vm.fields">{{ voter[key] }}</td>
         </tr>
@@ -126,4 +129,6 @@
     </table>
     
   </div>
+  
+</div>
 </div>

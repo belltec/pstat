@@ -114,14 +114,15 @@
       //Use data service here, route '/jsonData', query: MongoDB default.
       vm.error = ""; //Lets prepare for catching errors.   
 
-      vm.page = 1; //Reinitialize data viewer
+      vm.page = 1; //Reinitialize pagination on data refresh
+      vm.pages = 0;
 
       console.log(vm.qArray); //Query builder array 
       angular.forEach(vm.qArray, function (v, k) { //V is query object
         console.log(v);
           if (v.op && v.param && v.value) {
             vm.query[v.param] = new Object();
-            vm.query[v.param][v.op] = v.value; 
+            vm.query[v.param][v.op] = v.value;
           }
       });
 

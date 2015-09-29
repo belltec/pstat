@@ -48,10 +48,11 @@ input:hover {
   width: 30%;
 }
 thead {
-  top: 430px;
-  left: 390px;
+  top: 444px;
+  left: 285px;
   position: absolute;
 }
+
 .loading {
   opacity: 0.5;
 }
@@ -78,9 +79,10 @@ body {
   margin: 0px;
 }
 .infScroll{
-  height: 500px;
+  height: 480px;
   overflow-y: scroll;
 }
+
 .infScroll::-webkit-scrollbar {
     width: 0 !important;
 }
@@ -89,6 +91,10 @@ body {
 }
 .queryRow {
   padding: 4px;
+}
+.queryContainer {
+  height: 160px;
+  overflow-y: scroll;
 }
 .queryRowStuff {
   height: 30px;
