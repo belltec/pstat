@@ -5,13 +5,14 @@
   homeCtrl.$inject = ['$log', 'dataService', 'localStorageService', '$http'];
   function homeCtrl ($log, dataService, localStorageService, $http) {
     var vm = this;
-    vm.query = {}; //Main query object
+    vm.query = new Object(); //Main query object
     
-    //Variables for the query builder
+    //Variables for the query builder and query loading message
     vm.queries = 0;
     vm.qArray = [];
+    vm.loading = false;
 
-    //Other variables
+    //Arbitrary variables and conversion matrices
     vm.displayData = [];
     vm.displayKeys = [];
     vm.limit = 1500;
@@ -21,7 +22,9 @@
     vm.pages = 0; //Keep track for pagination reasons.
     vm.ngRepStart = 1;
     vm.ngRepEnd = 100;
-    vm.fields = { //Converts the keys from data into
+
+                  // Translation objects
+    vm.fields = { // Converts the keys from data into simpler names for the user
       "LastVoted" : "Last Voted",
       "Mail_Address1" : "Address",
       "Mail_ZipCode5": "Zip Code",
@@ -35,7 +38,7 @@
       "Count": "Count"
     };
 
-    vm.operators = [{
+    vm.operators = [{ //Symbols for the user, correct operation keys for the mongoDB query
       name : "=",
       op   : "$eq"
     }, {
@@ -53,7 +56,7 @@
     }, {
       name : "contains",
       op   : "$regex"
-    }];
+    }]; //End translation objects
 
     //Get meta data on init
     dataService.getMeta() 
@@ -65,7 +68,7 @@
       vm.error = err;
     });
 
-    vm.header = {
+    vm.header = { //For page-header directive's content attribute.
       title: "Political Statistics Engine v0.2",
       strapline: "Lousiana Voters"
     };
@@ -77,7 +80,7 @@
       var start = vm.page*100 - 99;
       var end = vm.page*100;
       var data = vm.data;
-      vm.displayData = data.slice(start, end);
+      vm.displayData = data.slice(start, end + 1);
 
       //Display purposes
       vm.ngRepStart = start;
@@ -112,8 +115,12 @@
     };
 
     vm.giveMeData = function () {
+      //Reinitialize data object
+      vm.data = null;
+
       //Use data service here, route '/jsonData', query: MongoDB default.
-      vm.error = ""; //Lets prepare for catching errors.   
+      vm.error = ""; //Lets prepare for catching errors. 
+      vm.loading = true;  
 
       vm.page = 1; //Reinitialize pagination on data refresh
       vm.pages = 0;

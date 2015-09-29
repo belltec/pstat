@@ -8,6 +8,7 @@
     </div>
 
     <h1 class="text-success" ng-show="!vm.meta">Loading Meta Data...</h1>
+    <h1 class="text-success" ng-show="vm.loading">Excecuting Query...</h1>
 
     <button class="btn btn-default" ng-click="vm.addQuery()">Add Query Parameter</button>
     <button class="btn btn-default" ng-click="vm.giveMeData()">Excecute Query</button>
@@ -46,7 +47,7 @@
 
       <thead>
         <tr>
-          <th class="voterDataTh" ng-repeat="(key, header) in vm.fields">{{ header }}</th>
+          <th class="voterDataTh" ng-repeat="(key, header) in vm.fields" ng-show="vm.data">{{ header }}</th>
         </tr>
       </thead>
 
