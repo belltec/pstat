@@ -5,12 +5,13 @@
   homeCtrl.$inject = ['$log', 'dataService', 'localStorageService', '$http'];
   function homeCtrl ($log, dataService, localStorageService, $http) {
     var vm = this;
-    vm.query = {};
+    vm.query = {}; //Main query object
     
     //Variables for the query builder
-    vm.queries = 1;
+    vm.queries = 0;
     vm.repQueries = [];
 
+    //Other variables
     vm.displayData = [];
     vm.displayKeys = [];
     vm.limit = 1500;
@@ -32,6 +33,26 @@
       "Jurisdiction_Ward": "Ward",
       "Registration_PoliticalPartyCode": "Party"
     };
+
+    vm.operators = [{
+      name : "=",
+      op   : "$eq"
+    }, {
+      name : "Greater Than",
+      op   : "$gt"
+    }, {
+      name : "Less Than",
+      op   : "$lt"
+    }, {
+      name : "Greater Than Or Equal To",
+      op   : "$gte"
+    }, {
+      name : "Less Than Or Equal To",
+      op   : "$lte"
+    }, {
+      name : "Regex",
+      op   : "$reg"
+    }];
 
     //Get meta data on init
     dataService.getMeta() 

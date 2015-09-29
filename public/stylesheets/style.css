@@ -87,6 +87,9 @@ body {
 .landingOverlay {
   float: top;
 }
+.queryRow {
+  padding: 6px;
+}
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
 /* small desktop */

@@ -6,9 +6,14 @@
     <div class="text-center" ng-show="!vm.meta || vm.error">
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
-    <button class="btn btn-default" ng-click="vm.addQuery()">Add Query</button>
+    <button class="btn btn-default" ng-click="vm.addQuery()">Add Query Parameter</button>
+    <button class="btn btn-default" ng-click="vm.giveMeData()">Excecute Query</button>
 
-    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">SOMETHING REPEAT ME</div>
+    <div class="queryRow" ng-repeat="j in vm.whyAmINecessary(vm.queries) track by $index">
+        <select class="selectParam" ng-options="" ng-model="vm.test"></select>
+        <select class="selectOperator" ng-options="k as v for (k, v) in vm.operators" ng-model="vm.test"></select>
+        <input>
+    </div>
 
     <!-- QUERY BUILDER FROM ONLINE -->
 
@@ -81,9 +86,9 @@
       </div>
     <hr>
     </form> -->
-    <div class="text-center">
-      <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Excecute Query</button>
-    </div>
+
+      
+
     
     <div class="row" ng-show="vm.data">
       <div class="col-md-12">
