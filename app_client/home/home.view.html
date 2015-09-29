@@ -20,93 +20,24 @@
         <button class="btn btn-warning queryRowStuff" ng-click="vm.removeMe($index)"><span class="glyphicon glyphicon-remove-sign"></span></button>
       </div>
     </div>
-
-    <!-- QUERY BUILDER FROM ONLINE -->
-
-    <!-- QUERY BUILDER FROM ONLINE END -->
-
-    <!--OLD FORM IF THERE IS A GOD OF CS PLEASE LET ANGULAR QUERY BUILDER WORK BY WEDNESDAY -->
-    <!-- <form>
-      <div class="col-xs-6">
-        
-        <div class="row" id="queryRow" ng-init="vm.initiation(Jurisdiction_Ward);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="wardLabel">Select Ward: </label>
-          </div>
-          <select type="text" ng-options="ward for ward in vm.meta.Jurisdiction_Ward" ng-model='vm.query.Jurisdiction_Ward.$eq' class="querySelect"></select>
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(LastVoted);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="LastVotedLabel">Last Voted: </label>
-          </div>
-          <select type="text" ng-options="lv for lv in vm.meta.LastVoted" ng-model='vm.query.LastVoted.$eq' class="querySelect"></select>
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(Registration_VoterStatus);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Status: </label>
-          </div>
-          <select type="text" ng-options="lv for lv in vm.meta.Registration_VoterStatus" ng-model='vm.query.Registration_VoterStatus.$eq' class="querySelect"></select>
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Race);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Race: </label>
-          </div>
-          <select type="text" ng-options="lv for lv in vm.meta.Personal_Race" ng-model='vm.query.Personal_Race.$eq' class="querySelect"></select>
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(Personal_Sex);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="Registration_VoterStatusLabel">Voter Sex: </label>
-          </div>
-          <select type="text" ng-options="lv for lv in vm.meta.Personal_Sex" ng-model='vm.query.Personal_Sex.$eq' class="querySelect"></select>
-        </div>
-      </div>
-      <div class="col-xs-6">
-        <div class="row" id="queryRow" ng-init="vm.initiation(Residence_ZipCode5);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="districtLabel">Enter Zip:</label>
-          </div>
-          <input type="text" ng-model="vm.query.Residence_ZipCode5.$eq" typeahead="zip for zip in vm.meta.Residence_ZipCode5" typeahead-editable="false">
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(Personal_FirstName);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="districtLabel">Enter First Name:</label>
-          </div>
-          <input type="text" ng-model="vm.query.Personal_FirstName.$regex">
-        </div>
-
-        <div class="row" id="queryRow" ng-init="vm.initiation(Personal_LastName);">
-          <div class="col-xs-6 col-m-3">
-            <label class="queryLabel pull-right" id="districtLabel">Enter Last Name:</label>
-          </div>
-          <input type="text" ng-model="vm.query.Personal_LastName.$regex">
-        </div>
-
-        <div class="row text-center">
-          <button class="btn btn-default testBtn" ng-click="vm.giveMeData()">Excecute Query</button>
-        </div>
-      </div>
-    <hr>
-    </form> -->
-
-      
-
     
-    <div class="row" ng-show="vm.data">
+    <div class="row pageRow" ng-show="vm.data">
       <div class="col-md-12">
         <nav><ul class="pager">
           <li><button class="btn btn-primary" ng-click="vm.prev()">Previous</button></li>
           <li><p class="strong"><strong> Page : {{ vm.page }} of {{vm.pages}} </strong> ({{vm.ngRepStart}} - {{vm.ngRepEnd}} of {{vm.count}})</p></li>
           <li><button class="btn btn-primary" ng-click="vm.next()">Next</button></li>
         </ul></nav>
+
+        <p>Export data to: 
+          <button class="btn btn-default">Excel</button>
+          <button class="btn btn-default">TSV</button>
+          <button class="btn btn-default">CSV</button>
+          <button class="btn btn-default">JSON</button>
+        </p>
+
       </div>
     </div>
-
-  <hr>
 
   <div class="tableContainer infScroll text-center">
     <!-- Loading overlay -->
@@ -127,7 +58,6 @@
       </tbody>
 
     </table>
-    
   </div>
   
 </div>

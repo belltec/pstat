@@ -48,7 +48,7 @@ input:hover {
   width: 30%;
 }
 thead {
-  top: 444px;
+  top: 458px;
   left: 285px;
   position: absolute;
 }
@@ -79,7 +79,7 @@ body {
   margin: 0px;
 }
 .infScroll{
-  height: 480px;
+  height: 475px;
   overflow-y: scroll;
 }
 
@@ -94,7 +94,11 @@ body {
 }
 .queryContainer {
   height: 160px;
-  overflow-y: scroll;
+  width: 800px;
+  overflow: scroll;
+  background-color: #dddddd;
+  margin: auto;
+  padding: 4px;
 }
 .queryRowStuff {
   height: 30px;
@@ -136,7 +140,9 @@ body {
 .queryItems {
   margin-right: 4px;
 }
-
+.pageRow {
+  padding: 6px;
+}
 .alert-group{
     margin-top: 10px;
     margin-bottom: 10px;
