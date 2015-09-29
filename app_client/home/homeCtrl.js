@@ -56,7 +56,9 @@
     }, {
       name : "contains",
       op   : "$regex"
-    }]; //End translation objects
+    }]; 
+
+    //End translation objects
 
     //Get meta data on init
     dataService.getMeta() 
@@ -80,7 +82,11 @@
       var start = vm.page*100 - 99;
       var end = vm.page*100;
       var data = vm.data;
-      vm.displayData = data.slice(start, end + 1);
+      vm.displayData = data.slice(start - 1, end);
+
+      if (vm.count < vm.page*100) {
+        vm.ngRepEnd = vm.count;
+      }
 
       //Display purposes
       vm.ngRepStart = start;
@@ -127,7 +133,7 @@
 
       vm.query = new Object();
 
-      var num = 0; //Local to add a running count column
+      var num = 1; //Local to add a running count column
 
       console.log(vm.qArray); //Query builder array 
       angular.forEach(vm.qArray, function (v, k) { //V is query object
@@ -141,18 +147,22 @@
       console.log(vm.query);
 
       vm.loading = true;
-      dataService.jsonData(vm.query, vm.limit)
+      dataService.jsonData(vm.query, vm.limit) //API call, my API is really simple, go check it out.
       .success (function (data) {
         vm.loading = false;
         vm.data = data;
 
         vm.count = data.length;
-        vm.pages = Math.ceil( vm.count / 100 );
+
         if (vm.count < 100) {
           vm.ngRepEnd = vm.count;
+        } else {
+          vm.ngRepEnd = 100;
         }
 
-        vm.displayData = data.slice(1, 100);
+        vm.pages = Math.ceil( vm.count / 100 );
+
+        vm.displayData = data.slice(0, vm.ngRepEnd);
         if (vm.data[0]) {
           vm.keys = Object.keys(vm.data[0]);
         } else {

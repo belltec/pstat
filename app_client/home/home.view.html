@@ -43,11 +43,11 @@
   <div class="tableContainer infScroll text-center">
     <!-- Loading overlay -->
 
-    <table id="voterTable" class="" align="center">
+    <table id="voterTable" class="" align="center"  ng-show="vm.data">
 
       <thead>
         <tr>
-          <th class="voterDataTh" ng-repeat="(key, header) in vm.fields" ng-show="vm.data">{{ header }}</th>
+          <th class="voterDataTh" ng-repeat="(key, header) in vm.fields" ng-show="vm.data[0]">{{ header }}</th>
         </tr>
       </thead>
 
