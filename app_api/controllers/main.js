@@ -149,7 +149,7 @@ module.exports.jsonData = function (req, res) {
   voter.find(q) 
   .limit(req.query.limit)
   .exec(function (err, data) {
-    console.log("we found voters!"); //Possibly a lie
+    console.log("we found voters!"); //Possibly a lie, lol
     if (err) {sendJsonResponse(res, 400, err); return;}
     if (!data) {sendJsonResponse(res, 404, "Voter data not found."); return;}
     sendJsonResponse(res, 200, data);

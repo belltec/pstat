@@ -57,7 +57,7 @@
       name : "contains",
       op   : "$regex"
     }, {
-      name : "!=",
+      name : "not equals",  //When you realize != is probably too complicated for our end users.
       op   : "$ne"
     }]; 
 
