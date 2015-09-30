@@ -56,6 +56,9 @@
     }, {
       name : "contains",
       op   : "$regex"
+    }, {
+      name : "!=",
+      op   : "$ne"
     }]; 
 
     //End translation objects
@@ -139,7 +142,9 @@
       angular.forEach(vm.qArray, function (v, k) { //V is query object
         console.log(v);
           if (v.op && v.param && v.value) {
-            vm.query[v.param] = new Object();
+            if (!vm.query[v.param]) {
+              vm.query[v.param] = new Object();  
+            }
             vm.query[v.param][v.op] = v.value;
           }
       });
