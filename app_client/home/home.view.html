@@ -7,21 +7,23 @@
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
 
-    <h1 class="text-success" ng-show="!vm.meta">Loading Meta Data...</h1>
-    <h1 class="text-success" ng-show="vm.loading">Excecuting Query...</h1>
+    <form ng-submit="vm.giveMeData()">
+      <h1 class="text-success" ng-show="!vm.meta">Loading Meta Data...</h1>
+      <h1 class="text-success" ng-show="vm.loading">Excecuting Query...</h1>
 
-    <button class="btn btn-default" ng-click="vm.addQuery()">Add Query Parameter</button>
-    <button class="btn btn-default" ng-click="vm.giveMeData()">Excecute Query</button>
+      <button class="btn btn-default" type="button"  ng-click="vm.addQuery()">Add Query Parameter</button>
+      <button class="btn btn-default" type="submit" ng-click="vm.giveMeData()">Excecute Query</button>
 
-    <div class="queryContainer">
-      <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">
-        <select class="selectParam queryRowStuff" ng-options="k as k for (k, v) in vm.meta" ng-model="vm.qArray[$index]['param']"></select>
-        <select class="selectOperator queryRowStuff" ng-options="v.op as v.name for (k, v) in vm.operators" ng-model="vm.qArray[$index]['op']"></select>
-        <input class="queryRowStuff" ng-model="vm.qArray[$index]['value']">
-        <button class="btn btn-warning queryRowStuff" ng-click="vm.removeMe($index)"><span class="glyphicon glyphicon-remove-sign"></span></button>
+      <div class="queryContainer">
+        <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">
+          <select class="selectParam queryRowStuff" ng-options="k as k for (k, v) in vm.meta" ng-model="vm.qArray[$index]['param']"></select>
+          <select class="selectOperator queryRowStuff" ng-options="v.op as v.name for (k, v) in vm.operators" ng-model="vm.qArray[$index]['op']"></select>
+          <input class="queryRowStuff" ng-model="vm.qArray[$index]['value']">
+          <button class="btn btn-warning queryRowStuff" ng-click="vm.removeMe($index)" type="button"><span class="glyphicon glyphicon-remove-sign"></span></button>
+        </div>
       </div>
-    </div>
-    
+    </form>
+
     <div class="row pageRow" ng-show="vm.data">
       <div class="col-md-12">
         <nav><ul class="pager">

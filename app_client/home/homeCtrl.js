@@ -26,8 +26,8 @@
                   // Translation objects
     vm.fields = { // Converts the keys from data into simpler names for the user
       "LastVoted" : "Last Voted",
-      "Mail_Address1" : "Address",
-      "Mail_ZipCode5": "Zip Code",
+      "Mail_Address1" : "Mailing Address",
+      "Mail_ZipCode5": "Mail Zip Code",
       "Mail_City" : "City",
       "Personal_Age" : "Age",
       "Personal_FirstName": "First Name",
@@ -196,6 +196,22 @@
       dataService.getMeta()
       .success( function (data) {
         console.log(data);
+
+        //Generate district
+        function council (ward, prec, array) {
+          ward = ward.trim();
+          prec = prec.trim();
+          prec = ward + '-' + prec;
+          var dist;
+          
+          angular.forEach(array, function (va,ke) {
+            
+            if (va.precinct == prec) {
+              dist = va.district;
+            }
+          })
+          return dist;
+        }
       })
       .error( function (err) {
         console.log(err);

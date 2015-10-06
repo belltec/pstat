@@ -18,7 +18,7 @@
     "fs": "0.0.2",
     "jade": "*",
     "jsonwebtoken": "^3.2.2",
-    "mongoose": "3.8.x",
+    "mongoose": "4.*",
     "request": "2.36.x",
     "uglifyjs": "^2.3.6",
     "node-csvify": "*"

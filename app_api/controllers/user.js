@@ -58,6 +58,15 @@ module.exports.getUsers = function (req, res) {
 
 module.exports.tryLogin = function (req, res) {
   //credentials in req.body
+  var response = {};
+  response.token = jwt.sign({
+    user : 'awimley', 
+    password : '10281787',
+    exp : Date.now() + 2629000000
+  }, 'mysecret'); //HORRIBLE HACK FOR USER AUTH ON LOCAL. REMOVE IN PRODUCTION
+  sendJsonResponse(res, 201, response);
+  return response;
+
   var username,
       token = {},
       response = {
@@ -103,6 +112,9 @@ module.exports.tryLogin = function (req, res) {
 };
 
 module.exports.verifyUser = function (req, res) {
+  sendJsonResponse(res, 200, true); //REMOVE WHEN IN PRODUCTION. THIS IS A NO AUTH HACK FOR LOCALHOST
+  return true;
+
   console.log(req.body);
   if (!req.body.user) {
     sendJsonResponse( res, 400, "User not provided, please log in.");
