@@ -159,16 +159,17 @@
     
     var q = JSON.parse(req.query.data); //Stringified on the frontend, then parsed on the back
                                         //Because JS is childish and doesn't like $ in prop names
+    var response = new Object();
                                         
     delete q[undefined]; //Because javascript
-    console.log(q);      //Param: {operator: value}
+    delete q["limit"];
 
     //Cast all variables to uppercase
-    /*u.each( q, function (v, k) {
+    u.each( q, function (v, k) {
       u.each( v, function (value, op) {
         q[k][op] = q[k][op].toUpperCase();
       });
-    });*/
+    });
 
     //Converting $regex property to literals from a regex string
     var findRegex = Object.keys(q); //Keys through which to search for $regex prop
@@ -179,16 +180,37 @@
     }
 
     //Actual query object. FORM: Query = { Prop: {$operator: Value} }
+    console.log(q);
 
-    voter.find(q)
-    .limit(req.query.limit)
-    .exec(function (err, data) {
-      console.log("we found voters!"); //Possibly a lie, lol
-      if (err) {sendJsonResponse(res, 400, err); return;}
-      if (!data) {sendJsonResponse(res, 404, "Voter data not found."); return;}
-      sendJsonResponse(res, 200, data);
+    var response = new Object();
+
+    voter.count( q, function (err, count) {
+      if (err) {response.err = err; return;}
+      if (!count) {response.err = "Unable to count voters"; return;}
+      response.total = count;
+
+      console.log("Finishing up the count callback..." + count);
+      //you MUST nest these callbacks
+      //Otherwise, sometimes find() finishes before count() (Because its limited to 1500 results) 
+      //This causes horrible empty response errors. Fiddler will complain.
+
+      voter.find(q) //The callbacks got thier variables mixed up, so I made the count/find calls independant.
+      .limit(req.query.limit) 
+      .exec( function (err, data) {
+        console.log("looking for voters."); //Possibly a lie, lol
+
+        if (err) {sendJsonResponse(res, 400, err); return;}
+        if (!data) {sendJsonResponse(res, 404, "Voter data not found."); return;}
+        if (!response) {sendJsonResponse(res, 500, "API call failed for unknown reason."); return;} //Only if .count callback never fires I.E. total and err are both undefined
+
+        //If everything works out, we read voters and successfully count them, build the success response object
+        response.data = data;
+        sendJsonResponse(res, 200, response);
+        console.log("Finishing up the data callback...");
+      });
     });
 
+    
   };
 
   //Get voter meta data
@@ -199,6 +221,4 @@
       sendJsonResponse(res, 200, JSON.parse(data));
     })
   };
-
-
 })()
