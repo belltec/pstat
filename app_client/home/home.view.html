@@ -49,12 +49,14 @@
       <thead>
         <tr>
           <th class="voterDataTh" ng-repeat="(key, header) in vm.fields" ng-show="vm.data[0]">{{ header }}</th>
+          <th>District</th>
         </tr>
       </thead>
 
       <tbody>
         <tr ng-repeat="voter in vm.displayData">
           <td class="" ng-repeat="(key, head) in vm.fields">{{ voter[key] }}</td>
+          <td>{{ vm.council(voter) }}</td>
         </tr>
       </tbody>
 
