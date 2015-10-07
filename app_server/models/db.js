@@ -1,5 +1,5 @@
 var mongoose = require('mongoose');
-var dbURI = 'mongodb://awimley:10281787@ds031893.mongolab.com:31893/pstat';
+var dbURI = 'mongodb://localhost/pstat';
 
 //CLASSIC MONGO STUFF------------------------------------------------------------------------------------------------
 mongoose.connect(dbURI);

@@ -28,7 +28,7 @@
       <div class="col-md-12">
         <nav><ul class="pager">
           <li><button class="btn btn-primary" ng-click="vm.prev()">Previous</button></li>
-          <li><p class="strong"><strong> Page : {{ vm.page }} of {{vm.pages}} </strong> ({{vm.ngRepStart}} - {{vm.ngRepEnd}} of {{vm.count}})</p></li>
+          <li><p class="strong"><strong> Page : {{ vm.page }} of {{vm.pages}} </strong> ({{vm.ngRepStart}} - {{vm.ngRepEnd}} of {{vm.count}} loaded) (Total: {{vm.total}})</p></li>
           <li><button class="btn btn-primary" ng-click="vm.next()">Next</button></li>
         </ul></nav>
 
@@ -53,7 +53,6 @@
       </thead>
 
       <tbody>
-        
         <tr ng-repeat="voter in vm.displayData">
           <td class="" ng-repeat="(key, head) in vm.fields">{{ voter[key] }}</td>
         </tr>

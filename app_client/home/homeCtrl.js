@@ -154,9 +154,11 @@
       dataService.jsonData(vm.query, vm.limit) //API call, my API is really simple, go check it out @ root/app_api/controllers/main.js
       .success (function (data) {
         vm.loading = false;
-        vm.data = data;
+        vm.data = data.data; //LOL, b/c we can't do array.totalCount, have to move it one layer up so parent can be object, not array
 
-        vm.count = data.length;
+        vm.count = vm.data.length;
+        vm.total = data.total;
+        console.log(data); //Data AND total
 
         if (vm.count < 100) {
           vm.ngRepEnd = vm.count;
@@ -166,15 +168,15 @@
 
         vm.pages = Math.ceil( vm.count / 100 );
 
-        vm.displayData = data.slice(0, vm.ngRepEnd);
+        vm.displayData = vm.data.slice(0, vm.ngRepEnd);
         if (vm.data[0]) {
           vm.keys = Object.keys(vm.data[0]);
         } else {
           vm.error = "Your search returned 0 results.";
         }
 
-        angular.forEach(data, function (k, v) {
-          data[v]["Count"] = "#" + num;
+        angular.forEach(vm.data, function (v, k) {
+          vm.data[k]["Count"] = "#" + num;
           num += 1;
         });
       })
