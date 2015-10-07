@@ -48,8 +48,8 @@ input:hover {
   width: 30%;
 }
 thead {
-  top: 430px;
-  left: 390px;
+  top: 457px;
+  left: 217px;
   position: absolute;
 }
 .loading {
@@ -78,14 +78,33 @@ body {
   margin: 0px;
 }
 .infScroll{
-  height: 500px;
+  height: 475px;
   overflow-y: scroll;
 }
+
 .infScroll::-webkit-scrollbar {
     width: 0 !important;
 }
 .landingOverlay {
   float: top;
+}
+.queryRow {
+  padding: 4px;
+}
+.queryContainer {
+  height: 160px;
+  width: 800px;
+  overflow: auto;
+  overflow-x: hidden;
+  background-color: #dddddd;
+  margin: auto;
+  padding: 4px;
+}
+.queryRowStuff {
+  height: 30px;
+}
+.showScroll {
+  overflow-x: scroll;
 }
 .nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
 
@@ -108,4 +127,34 @@ body {
     .infScroll {
       width: 650px;
     }
+}
+
+.group{
+    background-color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    border: solid 1px #666;
+}
+
+.group-conditions{
+    margin-left: 20px;
+}
+
+.queryItems {
+  margin-right: 4px;
+}
+.pageRow {
+  padding: 6px;
+}
+.alert-group{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border-color: rgb(192, 152, 83);
+    border-color: rgb(251, 238, 213);
+    border-color: rgb(220, 200, 150);
+}
+
+.condition, .group{
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
