@@ -7,12 +7,12 @@
       <h1 class="text-danger" ng-show="vm.error"> {{vm.error}} </h1>
     </div>
 
-    <form ng-submit="vm.giveMeData()">
+    <form>
       <h1 class="text-success" ng-show="!vm.meta">Loading Meta Data...</h1>
       <h1 class="text-success" ng-show="vm.loading">Excecuting Query...</h1>
 
       <button class="btn btn-default" type="button"  ng-click="vm.addQuery()">Add Query Parameter</button>
-      <button class="btn btn-default" type="submit" ng-click="vm.giveMeData()">Excecute Query</button>
+      <button class="btn btn-default" type="submit"  ng-click="vm.giveMeData()">Excecute Query</button>
 
       <div class="queryContainer">
         <div class="queryRow" ng-repeat="(key, value) in vm.qArray track by $index">

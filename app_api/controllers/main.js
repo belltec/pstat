@@ -159,20 +159,16 @@
     
     var q = JSON.parse(req.query.data); //Stringified on the frontend, then parsed on the back
                                         //Because JS is childish and doesn't like $ in prop names
-    var count = Number(0); //So SLOWWWWWW
                                         
     delete q[undefined]; //Because javascript
+    console.log(q);      //Param: {operator: value}
 
-    //Cast names to uppercase
-    if (q.Personal_FirstName || q.Personal_LastName) {
-      u.each ( q.Personal_FirstName, function (v,k) {
-        q.Personal_FirstName[k] = q.Personal_FirstName[k].toUpperCase();
+    //Cast all variables to uppercase
+    /*u.each( q, function (v, k) {
+      u.each( v, function (value, op) {
+        q[k][op] = q[k][op].toUpperCase();
       });
-
-      u.each( q.Personal_LastName, function (v,k) {
-        q.Personal_LastName[k] = q.Personal_LastName[k].toUpperCase();
-      });
-    }
+    });*/
 
     //Converting $regex property to literals from a regex string
     var findRegex = Object.keys(q); //Keys through which to search for $regex prop
@@ -186,15 +182,13 @@
 
     voter.find(q)
     .limit(req.query.limit)
-    .count( function (err, count) {
-      if (err) {sendJsonResponse(res, 400, err); return;}
-    })
     .exec(function (err, data) {
       console.log("we found voters!"); //Possibly a lie, lol
       if (err) {sendJsonResponse(res, 400, err); return;}
       if (!data) {sendJsonResponse(res, 404, "Voter data not found."); return;}
       sendJsonResponse(res, 200, data);
-    })
+    });
+
   };
 
   //Get voter meta data

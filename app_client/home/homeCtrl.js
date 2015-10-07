@@ -140,19 +140,18 @@
 
       console.log(vm.qArray); //Query builder array 
       angular.forEach(vm.qArray, function (v, k) { //V is query object
-        console.log(v);
-          if (v.op && v.param && v.value) {
-            if (!vm.query[v.param]) {
-              vm.query[v.param] = new Object();  
-            }
-            vm.query[v.param][v.op] = v.value;
+        if (v.op && v.param && v.value) {
+          if (!vm.query[v.param]) {
+            vm.query[v.param] = new Object();  
           }
+          vm.query[v.param][v.op] = v.value;
+        }
       });
 
       console.log(vm.query);
 
       vm.loading = true;
-      dataService.jsonData(vm.query, vm.limit) //API call, my API is really simple, go check it out.
+      dataService.jsonData(vm.query, vm.limit) //API call, my API is really simple, go check it out @ root/app_api/controllers/main.js
       .success (function (data) {
         vm.loading = false;
         vm.data = data;
