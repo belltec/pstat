@@ -165,7 +165,7 @@
     history.find().stream()
     .on('data', function (doc) {
 
-      voter.find({"Registration_Number" : {"$regex": "/" + doc._doc.Registration_Number + "/i"}}, function (err, docs) {
+      voter.find({"Registration_Number" : {"$regex": "\\" + doc._doc.Registration_Number + "\\i"}}, function (err, docs) {
         if (docs) {
           console.log(docs[0]);  
         }
