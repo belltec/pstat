@@ -162,14 +162,24 @@
     var reg = 0;
     var arr = new Array();
 
-    voter.find({"District" : "D"})
+    history.find().stream()
+    .on('data', function (doc) {
+      console.log(doc._doc.Registration_Number);
+    })
+    .on('error', function (err) {
+      console.log(err);
+    })
+    .on('end', function () {
+      console.log("Ending history stream.");
+    })
+
+
+    /*voter.find({"District" : "D"})
     .stream() 
     .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
       //console.log(doc._doc.Registration_Number);
 
-      history.find({"Registration_Number" : "4010243"}).exec( function (err, docs) {
-        console.log(docs);
-      });
+      
 
     })
     .on('error', function (err) {
@@ -178,7 +188,7 @@
     })
     .on('end', function () {
       console.log("Ending voter stream.");
-    });
+    });*/
   };
 
   var genDistrict = function(voter) {
