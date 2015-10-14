@@ -164,11 +164,13 @@
 
     history.find().stream()
     .on('data', function (doc) {
-      console.log(doc._doc.Registration_Number);
 
       voter.find({"Registration_Number" : doc._doc.Registration_Number}, function (err, docs) {
-        console.log(docs[0]);
-      })
+        if (docs[0]) {
+          console.log(docs[0]);  
+        }
+      });
+
     })
     .on('error', function (err) {
       console.log(err);
