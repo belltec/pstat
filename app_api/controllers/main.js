@@ -167,7 +167,7 @@
     .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
       //console.log(doc._doc.Registration_Number);
 
-      history.find().limit(20).exec( function (err, docs) {
+      history.find({"Registration_Number" : "4010243"}).exec( function (err, docs) {
         console.log(docs);
       });
 
