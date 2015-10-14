@@ -157,18 +157,35 @@
   };
 
   function procVoters (res) { //container function for various voter processing
-    history
-    .find({})
-    .stream()
-    .on('data', function (doc) {
-      console.log(doc);
+
+    var count = 0;
+    var reg = 0;
+    var arr = new Array();
+
+    voter.find({"District": "D"})
+    .stream() 
+    .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
+
+     history.find({"Registration_Number" : doc._doc.Registration_Number})
+     .stream()
+     .on('data', function (dc) {
+      console.log(dc);
+     })
+     .on('error', function (err) {
+        console.log(err);
+        sendJsonResponse(res, err)
+      })
+     .on('end', function () {
+      console.log("Ending history stream.")
+     })
+
     })
     .on('error', function (err) {
       console.log(err);
       sendJsonResponse(res, err)
     })
     .on('end', function () {
-      console.log("Ending");
+      console.log("Ending voter stream.");
     });
   };
 
