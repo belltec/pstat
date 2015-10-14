@@ -178,9 +178,9 @@
         })
         .on('end', function () {
           console.log("Ending history stream.")
-        })
+        })*/
 
-      })*/
+    })
     .on('error', function (err) {
       console.log(err);
       sendJsonResponse(res, err)
