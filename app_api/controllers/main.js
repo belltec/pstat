@@ -162,12 +162,12 @@
     var reg = 0;
     var arr = new Array();
 
-    voter.find({"District": "D"})
+    voter.find({"District" : "D"})
     .stream() 
     .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
-      console.log(doc._doc.Registration_Number);
+      //console.log(doc._doc.Registration_Number);
 
-      /*history.find({"Registration_Number" : doc._doc.Registration_Number})
+      history.find({"Registration_Number" : doc._doc.Registration_Number})
         .stream()
         .on('data', function (dc) {
           console.log(dc);
@@ -178,7 +178,7 @@
         })
         .on('end', function () {
           console.log("Ending history stream.")
-        })*/
+        })
 
     })
     .on('error', function (err) {
