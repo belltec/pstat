@@ -165,19 +165,20 @@
     voter.find({"District": "D"})
     .stream() 
     .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
+      console.log(doc._doc.Registration_Number);
 
-     history.find({"Registration_Number" : doc._doc.Registration_Number})
-     .stream()
-     .on('data', function (dc) {
-      console.log(dc);
-     })
-     .on('error', function (err) {
+    history.find({"Registration_Number" : doc._doc.Registration_Number})
+      .stream()
+      .on('data', function (dc) {
+        console.log(dc);
+      })
+      .on('error', function (er) {
         console.log(err);
         sendJsonResponse(res, err)
       })
-     .on('end', function () {
-      console.log("Ending history stream.")
-     })
+      .on('end', function () {
+        console.log("Ending history stream.")
+      })
 
     })
     .on('error', function (err) {
