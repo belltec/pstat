@@ -165,7 +165,7 @@
     history.find().stream()
     .on('data', function (doc) {
 
-      voter.find({"Registration_Number" : doc._doc.Registration_Number}, function (err, docs) {
+      voter.find({"Registration_Number" : {"$eq": doc._doc.Registration_Number}}, function (err, docs) {
         if (docs[0]) {
           console.log(docs[0]);  
         }
@@ -178,23 +178,6 @@
     .on('end', function () {
       console.log("Ending history stream.");
     })
-
-
-    /*voter.find({"District" : "D"})
-    .stream() 
-    .on('data', function (doc) { //On data we set up a voter history stream to generate an individual's history array
-      //console.log(doc._doc.Registration_Number);
-
-      
-
-    })
-    .on('error', function (err) {
-      console.log(err);
-      sendJsonResponse(res, err)
-    })
-    .on('end', function () {
-      console.log("Ending voter stream.");
-    });*/
   };
 
   var genDistrict = function(voter) {
