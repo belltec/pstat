@@ -92,11 +92,35 @@
   };
 
   //WRITE NEW METADATA ===============================================================================================>
-  function generateMetaData (inF, outF) { //takes inF (in file), outF is a list of all possible values for all properties in inF.
-    fs.readFile(inF, 'utf-8', function (err, data) {
+  function generateMetaData () { //takes inF (in file), outF is a list of all possible values for all properties in inF.
+    var dates = []; //Maybe change to change cursor.
+    var dat;
+
+    voter.find({"District" : {"$eq" : "D"}}, function (err, voterArr) {
+      u.each( voterArr, function (v, k) {
+        u.each(v._doc.VotingHistory, function (va, ke) {
+          if (!u.contains(dates, va)) {
+            dates.push(va);
+          }
+        }); 
+      });
+      console.log(dates);
+
+      var file = fs.readFileSync('C:/Users/awimley/pstat/data/meta2.json', 'utf-8');
+      file = JSON.parse(file);
+      file.VotingHistory = dates;
+      file = JSON.stringify(file);
+      fs.writeFileSync('C:/Users/awimley/pstat/data/metaComb.json', file);
+    });
+
+    
+
+    //LEGACY CODE FOR FS BASED META DATA GENERATION
+    //NOW WE HAVE A DATABASE SO THIS IS MOSTLY IRRELEVANT
+    
 
       //We should only need source file to gen metadata
-      if (err) {console.log(err); return;}
+     /* if (err) {console.log(err); return;}
       var jsData = JSON.parse(data);
       var keys = Object.keys(jsData[1]);
       var meta = {};
@@ -117,7 +141,7 @@
         if (err) {console.log("We have experienced a fatal error gents: " + err); return;}
         console.log("Succesfully saved meta data: " + outF);
       })
-    });
+    });*/
   };
 
   //WRITE JSON FROM TSV ===============================================================================================>
@@ -158,27 +182,35 @@
 
   function procVoters (res) { //container function for various voter processing
 
-    var count = 0;
-    var reg = 0;
-    var arr = new Array();
-
-    history.find().stream()
+    voter.find({"District" : {"$eq" : "D"}}).stream()
     .on('data', function (doc) {
 
       var reg = new RegExp(doc._doc.Registration_Number, "i");
-      voter.find({"Registration_Number" : {"$regex": reg}}, function (err, docs) {
-        if (docs) {
-          console.log(docs[0]);  
-        }
-      });
+      history.find({"Registration_Number" : {"$eq" : Number(doc._doc.Registration_Number)}}, function (err, docs) {
+        var arr = new Array(); //In the context of a single voter!
+        u.each(docs, function (v, k) {
+          if (v) {
+            console.log(v._doc.ElectionDate); //Only if Registration_Number of voter matches history doc.
+            arr.push(v._doc.ElectionDate);
+          }
+        });
 
+        //Now we have array of history
+        doc._doc.VotingHistory = arr;
+        console.log(doc._doc);
+        voter.update({ "Registration_Number" : doc._doc.Registration_Number}, doc._doc, {overwrite : true }, function (er, num) {
+          if (er) console.log("ERRRRRRRRRRRRRRRRRRRRRRRRRR");
+          console.log("NUMBER AFFECTED (should always be 1) : " + num);
+        });
+        
+      });
     })
     .on('error', function (err) {
       console.log(err);
     })
     .on('end', function () {
-      console.log("Ending history stream.");
-    })
+      console.log("Ending voter stream.");
+    });
   };
 
   var genDistrict = function(voter) {
@@ -195,7 +227,7 @@
   module.exports.jsonData = function (req, res) {
 
     //REMOVE PLZ, IM HIJACKING THIS ENDPOINT LIKE A JSON PIRATE
-    procVoters(res);
+    //procVoters(res);
     
     var q = JSON.parse(req.query.data); //Stringified on the frontend, then parsed on the back
                                         //Because JS is childish and doesn't like $ in prop names
@@ -239,6 +271,8 @@
       .limit(JSON.parse(req.query.limit)) 
       .exec( function (err, data) {
         console.log("looking for voters."); //Possibly a lie, lol
+
+        
 
         if (err) {sendJsonResponse(res, 400, err); return;}
         if (!data) {sendJsonResponse(res, 404, "Voter data not found."); return;}
